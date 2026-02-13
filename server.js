@@ -14,13 +14,14 @@ app.get("/", (req, res) => {
 app.get("/auth/lightspeed", (req, res) => {
 
     const authUrl =
-        `https://cloud.lightspeedapp.com/oauth/authorize` +
+        `https://lightspeedapis.com/oauth/authorize` +
         `?response_type=code` +
         `&client_id=${process.env.LS_CLIENT_ID}` +
         `&redirect_uri=${process.env.LS_REDIRECT_URI}`;
 
     res.redirect(authUrl);
 });
+
 
 /* Step 2: Handle callback + exchange code for token */
 app.get("/auth/lightspeed/callback", async (req, res) => {
@@ -34,7 +35,7 @@ app.get("/auth/lightspeed/callback", async (req, res) => {
     try {
 
         const tokenResponse = await axios.post(
-            "https://cloud.lightspeedapp.com/oauth/access_token",
+            "https://lightspeedapis.com/oauth/access_token",
             {
                 grant_type: "authorization_code",
                 client_id: process.env.LS_CLIENT_ID,
@@ -43,6 +44,7 @@ app.get("/auth/lightspeed/callback", async (req, res) => {
                 redirect_uri: process.env.LS_REDIRECT_URI
             }
         );
+
 
         const accessToken = tokenResponse.data.access_token;
 
