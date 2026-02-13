@@ -47,6 +47,7 @@ app.get("/auth/lightspeed/callback", async (req, res) => {
 
 
         const accessToken = tokenResponse.data.access_token;
+        console.log("Full token response:", tokenResponse.data);
 
         console.log("Access token received:", accessToken);
 
