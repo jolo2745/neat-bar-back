@@ -43,16 +43,23 @@ app.get("/auth/lightspeed/callback", async (req, res) => {
 
     try {
 
+        const params = new URLSearchParams();
+        params.append("grant_type", "authorization_code");
+        params.append("client_id", process.env.LS_CLIENT_ID);
+        params.append("client_secret", process.env.LS_CLIENT_SECRET);
+        params.append("code", code);
+        params.append("redirect_uri", process.env.LS_REDIRECT_URI);
+
         const tokenResponse = await axios.post(
             "https://lightspeedapis.com/resto/oauth/access_token",
+            params,
             {
-                grant_type: "authorization_code",
-                client_id: process.env.LS_CLIENT_ID,
-                client_secret: process.env.LS_CLIENT_SECRET,
-                code: code,
-                redirect_uri: process.env.LS_REDIRECT_URI
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                }
             }
         );
+
 
 
         const accessToken = tokenResponse.data.access_token;
