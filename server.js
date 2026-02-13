@@ -14,7 +14,7 @@ app.get("/", (req, res) => {
 app.get("/auth/lightspeed", (req, res) => {
 
     const authUrl =
-        `https://lightspeedapis.com/oauth/authorize` +
+        `https://lightspeedapis.com/resto/oauth/authorize` +
         `?response_type=code` +
         `&client_id=${process.env.LS_CLIENT_ID}` +
         `&redirect_uri=${process.env.LS_REDIRECT_URI}`;
@@ -35,7 +35,7 @@ app.get("/auth/lightspeed/callback", async (req, res) => {
     try {
 
         const tokenResponse = await axios.post(
-            "https://lightspeedapis.com/oauth/access_token",
+            "https://lightspeedapis.com/resto/oauth/access_token",
             {
                 grant_type: "authorization_code",
                 client_id: process.env.LS_CLIENT_ID,
